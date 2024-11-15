@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #1a252c;
+}
+.container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+}
+.container .box{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transition: 1s ease-in-out;
+    cursor: pointer;
+
+    /* cria o reflex da imagem ou da div em baixo 
+    dela 1px distancia ela da ountra deixa transparente
+     e com uma opacidade*/
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0003);
+
+  /*  -webkit-box-reflect =
+   [ above | below | right | left ]? <length>? <image>?
+   As palavras-chave indicam em qual direção a 
+   reflexão deve acontecer.
+
+   <length>
+Indica o tamanho do reflexo.
+
+    <image>
+Descreve a máscara a ser aplicada ao reflexo.
+   */
+}
+.container .box img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Quando o Contêiner É "Hoverado": */
+/* margin: 0 -20px;: Reduz o espaçamento horizontal entre os 
+itens que não estão sendo "hoverados".
+filter: drop-shadow(...): Adiciona sombras dinâmicas às caixas
+ para criar um efeito visual mais imersivo.
+transform: perspective(500px) rotateY(45deg) scale(0.95);:
+perspective(500px): Simula profundidade no eixo Z.
+rotateY(45deg): Inclina os itens no eixo Y, criando uma 
+aparência tridimensional.
+scale(0.95): Reduz ligeiramente o tamanho. */
+.container:hover > :not(:hover){
+    margin: 0 -20px;
+    filter: drop-shadow(0 0 25px #000) drop-shadow(0 0 45px #000);
+    transform: perspective(500px) rotateY(45deg) scale(0.95);
+}
+
+/* Quando Uma Caixa Não Selecionada Está ao Lado de Uma Hoverada: */
+.container .box:hover ~ .box{
+    transform: perspective(500px) rotateY(-45deg) scale(0.95);
+    /* Faz com que as caixas ao lado inclinem-se na 
+    direção oposta (rotações negativas no eixo Y). */
+/* Também reduz o tamanho delas ligeiramente. */
+}
+
+
+
+/* rotateY(0): Remove a inclinação no eixo Y, 
+alinhando a caixa diretamente para o usuário.
+scale(1.5):
+ Aumenta o tamanho da caixa, destacando-a.
+z-index: 1000;: Garante que a caixa "hoverada" fique acima das outras. */
+.container .box:hover{
+    transform: perspective(500px) rotateY(0) scale(1.5);
+    z-index: 1000;
+}
